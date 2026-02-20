@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tourist Assistant - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <nav>
+    <h1>Tourist Assistant</h1>
+    <div>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('chatbot') }}">Chatbot</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h2>Explore Northern Pakistan with Confidence</h2>
+    <p>Your personal tourist assistant for Naran, Kaghan, and beyond</p>
+    <a href="{{ url_for('chatbot') }}"><button>Chat Now</button></a>
+  </div>
+
+  <section class="about">
+    <h2>About Us</h2>
+    <p>We are passionate about helping travelers explore the beautiful northern regions of Pakistan with ease. Get directions, hotel info, travel advice, and more—instantly.</p>
+  </section>
+</body>
+</html>

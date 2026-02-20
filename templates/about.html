@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - Tourist Assistant Bot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #0d6efd;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    .nav-links a.active {
+      text-decoration: underline;
+    }
+
+    .about-section {
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .about-section h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .about-section p {
+      font-size: 18px;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 1rem;
+    }
+
+    .team-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      margin-top: 60px;
+    }
+
+    .member-card {
+      text-align: center;
+      animation: slideInUp 1s ease-in-out;
+    }
+
+    .member-card img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .member-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .member-card h3 {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #0d6efd;
+    }
+
+    .member-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .supervisor {
+      transform: scale(1.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .supervisor {
+        transform: scale(1.1);
+      }
+
+      .team-container {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="logo">Northern Pakistan Tourist Guide</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/chatbot">Chatbot</a></li>
+      <li><a href="/about" class="active">About Us</a></li>
+    </ul>
+  </nav>
+
+  <section class="about-section">
+    <h1>Meet the Team</h1>
+    <p>This Tourist Assistant Bot is created to help travelers navigate and explore the beauty of northern Pakistan — including areas like Naran, Kaghan, Hunza, and more.</p>
+
+    <div class="team-container">
+      <!-- Left: You -->
+      <div class="member-card">
+        <img src="{{ url_for('static', filename='images/Waheed.jpeg') }}" alt="Your Photo">
+        <h3>Waheed Alam</h3>
+        <p>Roll No: 303-211004</p>
+      </div>
+
+      <!-- Center: Supervisor -->
+      <div class="member-card supervisor">
+        <img src="{{ url_for('static', filename='images/supervisor.png.jpg') }}" alt="Supervisor Photo">
+        <h3>Ibrar Afzal</h3>
+        <p>Project Supervisor</p>
+      </div>
+
+      <!-- Right: Teammate -->
+      <div class="member-card">
+        <img src="{{ url_for('static', filename='images/Musab.jpeg') }}" alt="Teammate Photo">
+        <h3>Musab Mughal</h3>
+        <p>Roll No: 303-211035</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

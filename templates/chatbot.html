@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tourist Assistant Bot - Chat</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+<!-- Marked.js for Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="logo">Northern Pakistan Tourist Guide</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/chatbot" class="active">Chatbot</a></li>
+      <li><a href="/about">About Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="chat-container">
+  <h1>Tourist Assistant Chatbot</h1>
+  <div id="chat-box" class="chat-box"></div>
+  <div class="input-container">
+    <input
+      type="text"
+      id="user-input"
+      placeholder="Ask a question about northern Pakistan..."
+      autocomplete="off"
+    />
+    <button id="send-btn">Send</button>
+    <button id="reset-btn" title="Clear chat history">Reset</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById('chat-box');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+  const resetBtn = document.getElementById('reset-btn');
+
+  function appendMessage(content, className) {
+    const message = document.createElement('div');
+    message.classList.add('message', className);
+    if (className === 'bot-message') {
+      message.innerHTML = marked.parse(content);
+    } else {
+      message.textContent = content;
+    }
+    chatBox.appendChild(message);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    appendMessage(text, 'user-message');
+    userInput.value = '';
+
+    // Typing indicator
+    const typing = document.createElement('div');
+    typing.classList.add('message', 'typing-indicator');
+    typing.textContent = 'Assistant is typing...';
+    chatBox.appendChild(typing);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    fetch('/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ question: text }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        typing.remove();
+        if (data.response) {
+          appendMessage(data.response, 'bot-message');
+        } else if (data.error) {
+          appendMessage('Error: ' + data.error, 'bot-message');
+        } else {
+          appendMessage('Sorry, something went wrong.', 'bot-message');
+        }
+      })
+      .catch(() => {
+        typing.remove();
+        appendMessage('Error connecting to server.', 'bot-message');
+      });
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    fetch('/reset', { method: 'POST' })
+      .then(() => {
+        chatBox.innerHTML = '';
+      });
+  });
+
+
+  
+</script>
+</body>
+</html>
